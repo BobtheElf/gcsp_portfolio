@@ -2,7 +2,6 @@ import React from 'react';
 import { Box, Typography, Link, Container, IconButton } from '@mui/material';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import TwitterIcon from '@mui/icons-material/Twitter';
 
 const Footer: React.FC = () => {
   return (
