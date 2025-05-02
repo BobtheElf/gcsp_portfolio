@@ -2,17 +2,16 @@ import React, { useRef, useState } from 'react';
 import { Box, Typography, Container, TextField, Button, Grid, Link, Snackbar, Alert } from '@mui/material';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
-import ReCAPTCHA from 'react-google-recaptcha';
+import { Turnstile } from '@marsidev/react-turnstile';
 
 const Contact: React.FC = () => {
   const form = useRef<HTMLFormElement>(null);
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [lastSubmissionTime, setLastSubmissionTime] = useState<number>(0);
-  const [recaptchaValue, setRecaptchaValue] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   const sanitizeInput = (input: string): string => {
     // Basic XSS prevention
@@ -24,8 +23,8 @@ const Contact: React.FC = () => {
     return emailRegex.test(email);
   };
 
-  const handleRecaptchaChange = (value: string | null) => {
-    setRecaptchaValue(value);
+  const handleTurnstileSuccess = (token: string) => {
+    setTurnstileToken(token);
   };
 
   const sendEmail = async (e: React.FormEvent) => {
@@ -40,9 +39,9 @@ const Contact: React.FC = () => {
       return;
     }
 
-    // Check reCAPTCHA
-    if (!recaptchaValue) {
-      setSnackbarMessage('Please complete the reCAPTCHA verification.');
+    // Check Turnstile
+    if (!turnstileToken) {
+      setSnackbarMessage('Please complete the CAPTCHA verification.');
       setSnackbarSeverity('error');
       setOpenSnackbar(true);
       return;
@@ -94,8 +93,7 @@ const Contact: React.FC = () => {
       setOpenSnackbar(true);
       formElement.reset();
       setLastSubmissionTime(Date.now());
-      setRecaptchaValue(null);
-      recaptchaRef.current?.reset();
+      setTurnstileToken(null);
     } catch (error) {
       console.error('Error sending email:', error);
       setSnackbarMessage('Failed to send message. Please try again.');
@@ -148,19 +146,10 @@ const Contact: React.FC = () => {
                   required
                   inputProps={{ maxLength: 1000 }}
                 />
-                <Box sx={{ 
-                  my: 2, 
-                  display: 'flex', 
-                  justifyContent: 'flex-start',
-                  '& iframe': {
-                    transform: 'scale(0.95)',
-                    transformOrigin: 'left center'
-                  }
-                }}>
-                  <ReCAPTCHA
-                    ref={recaptchaRef}
-                    sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY!}
-                    onChange={handleRecaptchaChange}
+                <Box sx={{ my: 2 }}>
+                  <Turnstile
+                    siteKey={process.env.REACT_APP_TURNSTILE_SITE_KEY!}
+                    onSuccess={handleTurnstileSuccess}
                   />
                 </Box>
                 <Button
@@ -168,7 +157,7 @@ const Contact: React.FC = () => {
                   variant="contained"
                   size="large"
                   sx={{ mt: 2 }}
-                  disabled={isSubmitting || !recaptchaValue}
+                  disabled={isSubmitting || !turnstileToken}
                 >
                   {isSubmitting ? 'Sending...' : 'Send Message'}
                 </Button>
