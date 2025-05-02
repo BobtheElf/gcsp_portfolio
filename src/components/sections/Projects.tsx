@@ -44,12 +44,20 @@ const Projects: React.FC = () => {
           <Typography variant="h3" component="h2" gutterBottom align="center">
             My Projects
           </Typography>
-          <Grid container spacing={4} sx={{ mt: 2 }}>
+          <Grid 
+            container 
+            spacing={4} 
+            sx={{ 
+              mt: 2,
+              justifyContent: 'center'
+            }}
+          >
             {projects.map((project, index) => (
-              <Grid item xs={12} sm={6} md={4} key={index}>
+              <Grid item xs={12} sm={6} md={5} key={index} sx={{ display: 'flex', justifyContent: 'center' }}>
                 <motion.div
                   whileHover={{ y: -10 }}
                   transition={{ duration: 0.2 }}
+                  style={{ width: '100%', maxWidth: '500px' }}
                 >
                   <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                     <CardMedia
