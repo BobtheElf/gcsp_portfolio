@@ -3,6 +3,7 @@ compatibility_date = "2024-05-02"
 
 [build]
 command = "npm run build"
+cwd = "portfolio"
 
 [site]
-entry-point = "build" 
+bucket = "build" 
