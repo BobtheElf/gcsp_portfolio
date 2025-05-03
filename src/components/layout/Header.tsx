@@ -21,7 +21,7 @@ const Header: React.FC<HeaderProps> = ({ darkMode, toggleTheme }) => {
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-            My Portfolio
+            Grand Challenges Scholars Program Portfolio
           </Link>
         </Typography>
         <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
