@@ -8,25 +8,36 @@ interface Project {
   image: string;
   technologies: string[];
   githubUrl: string;
-  demoUrl: string;
 }
 
 const projects: Project[] = [
   {
-    title: 'Project 1',
-    description: 'A brief description of the project and its main features.',
-    image: 'https://via.placeholder.com/300x200',
-    technologies: ['React', 'TypeScript', 'Node.js'],
-    githubUrl: '#',
-    demoUrl: '#',
+    title: 'MinisculeDB',
+    description: 'A system which creates a distributed database among Raspberry Pi Picos. The Raspberry Pi Picos run an SQL-based querying system with a custom iterator as well as other commands to affect the functionality of the database. The database recorded digital signals (button presses) and analog signals (potentiometer values) and stored them in a single table queried by the custom DBMS.',
+    image: 'https://github.com/BobtheElf/MinisculeDB/blob/main/IMG_4822.jpg?raw=true',
+    technologies: ['C', 'Pico SDK', 'Git', 'SQL', 'VSCode'],
+    githubUrl: 'https://github.com/BobtheElf/MinisculeDB',
   },
   {
     title: 'Project 2',
-    description: 'Another project description highlighting its unique aspects.',
-    image: 'https://via.placeholder.com/300x200',
+    description: 'Another project description highlighting its unique aspects and other stuff as well.',
+    image: 'https://via.placeholder.com/200x200',
     technologies: ['React', 'Material-UI', 'Firebase'],
     githubUrl: '#',
-    demoUrl: '#',
+  },
+  {
+    title: 'Project 3',
+    description: 'Another project description highlighting its unique aspects and other stuff as well.',
+    image: 'https://via.placeholder.com/200x200',
+    technologies: ['Node.js', 'Express', 'MongoDB'],
+    githubUrl: '#',
+  },
+  {
+    title: 'Project 4',
+    description: 'Another project description highlighting its unique aspects and other stuff as well.',
+    image: 'https://via.placeholder.com/200x200',
+    technologies: ['Node.js', 'Express', 'MongoDB'],
+    githubUrl: '#',
   },
   // Add more projects as needed
 ];
@@ -57,12 +68,12 @@ const Projects: React.FC = () => {
                 <motion.div
                   whileHover={{ y: -10 }}
                   transition={{ duration: 0.2 }}
-                  style={{ width: '100%', maxWidth: '500px' }}
+                  style={{ height: '100%', maxWidth: '500px' }}
                 >
-                  <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                  <Card sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
                     <CardMedia
                       component="img"
-                      height="200"
+                      width="200"
                       image={project.image}
                       alt={project.title}
                     />
@@ -80,9 +91,6 @@ const Projects: React.FC = () => {
                     <CardActions>
                       <Button size="small" href={project.githubUrl} target="_blank">
                         GitHub
-                      </Button>
-                      <Button size="small" href={project.demoUrl} target="_blank">
-                        Live Demo
                       </Button>
                     </CardActions>
                   </Card>
